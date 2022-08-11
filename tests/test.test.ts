@@ -39,4 +39,5 @@ describe("exames tests (get test)", () => {
         const status2 = teacherDisciplineId.status
         expect(status2).toEqual(404)
     })
-})
+});
+

@@ -1,4 +1,4 @@
-import joi, { string } from "joi";
+import joi from "joi";
 
 export const testSchema = joi.object({
     name: joi.string().required(),

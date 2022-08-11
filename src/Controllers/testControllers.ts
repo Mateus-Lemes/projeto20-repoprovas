@@ -1,14 +1,6 @@
 import { Request, Response } from "express";
-import { createTestService, getCategoriesService, getTestsByDisciplinesService, getTestsByTeachersService } from "../Services/testServices.js";
+import { createTestService, getTestsByDisciplinesService, getTestsByTeachersService } from "../Services/testServices.js";
 
-
-export async function getCategoriesController(req: Request, res: Response) {
-
-    const categories = await getCategoriesService()
-
-    res.status(200).send(categories);
-    
-}
 
 export async function createTestController(req:Request, res: Response) {
     const {body} = req;

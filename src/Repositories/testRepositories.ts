@@ -7,13 +7,7 @@ export interface createTest {
     teacherDisciplineId: number 
 }
 
-export async function getCategoriesRepositories() {
-    const categories = await prisma.categories.findMany();
-
-    return categories;
-}
-
-export async function createTestRepositories(body: createTest) {
+export async function createTest(body: createTest) {
     await prisma.tests.create({
         data: body
     })
@@ -37,29 +31,48 @@ export async function findByTeacherDisciplineId(id:number) {
     return teacherDisciplineId;
 }
 
-export async function getTerms() {
-    const terms = await prisma.terms.findMany()
-    return terms
-}
-
-export async function getDisciplines() {
-    const disciplines = await prisma.disciplines.findMany()
-    return disciplines
-}
-
-export async function getTestsRepositories() {
-    const tests = await prisma.tests.findMany({
+export async function getTestsByDisciplines() {
+    const tests = await prisma.terms.findMany({
         where: {},
-        include: {
-            category: {},
-            teacherDiscipline: {
-                include: {
-                    teacher: {},
-                    discipline: {
-                        include: {
-                            terms: {}
+        select: {
+            number: true,
+            disiciplines: {
+                select: {
+                    name: true,
+                    teachersDisciplines: {
+                        select: {
+                            tests: {
+                                select: {
+                                    name: true,
+                                    category: true,
+                                    pdfUrl: true
+                                }
+                            },
+                            teacher: true
                         }
                     }
+                }
+            }
+        }
+    });
+    return tests;
+}
+
+export async function getTestsByTeachers() {
+    const tests = await prisma.teachers.findMany({
+        where: {},
+        select: {
+            name: true,
+            teachersDisciplines: {
+                select: {
+                    tests: {
+                        select: {
+                            name: true,
+                            pdfUrl: true,
+                            category: true
+                        }
+                    },
+                    discipline: true
                 }
             }
         }

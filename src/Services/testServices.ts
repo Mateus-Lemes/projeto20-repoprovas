@@ -1,11 +1,4 @@
-import { createTest, createTestRepositories, findByCategoryId, findByTeacherDisciplineId, getCategoriesRepositories, getTestsRepositories} from "../Repositories/testRepositories.js";
-
-
-export async function getCategoriesService() {
-    const categories = await getCategoriesRepositories();
-
-    return categories;
-}
+import { createTest, findByCategoryId, findByTeacherDisciplineId, getTestsByDisciplines, getTestsByTeachers} from "../Repositories/testRepositories.js";
 
 export async function createTestService(body: createTest) {
     const {categoryId, teacherDisciplineId} = body;
@@ -26,16 +19,16 @@ export async function createTestService(body: createTest) {
         }
     }
 
-    await createTestRepositories(body);
+    await createTest(body);
 }
 
 export async function getTestsByTeachersService() {
-    const testByTeachers = await getTestsRepositories()
-    console.log("esse é do Teachers")
+    const testByTeachers = await getTestsByTeachers()
+    
     return testByTeachers;
 }
 export async function getTestsByDisciplinesService() {
-    const testByDisciplines = await getTestsRepositories()
-    console.log("esse é do Disciplines")
+    const testByDisciplines = await getTestsByDisciplines()
+    
     return testByDisciplines;
 }
